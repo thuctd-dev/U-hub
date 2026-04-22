@@ -12,18 +12,22 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://u-hub-frontend.vercel.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Routes
-app.use('/auth', require('./routes/authRoutes'));
-app.use('/tasks', require('./routes/taskRoutes'));
-app.use('/users', require('./routes/userRoutes'));
-app.use('/projects', require('./routes/projectRoutes'));
-app.use('/ai', require('./routes/aiRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/tasks', require('./routes/taskRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/ai', require('./routes/aiRoutes'));
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'U-Hub API is running 🚀' });
 });
 
