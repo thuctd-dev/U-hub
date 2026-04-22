@@ -27,8 +27,12 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'U-Hub API is running 🚀' });
 });
 
-const PORT = process.env.PORT || 5000;
+// Only listen if not running as a serverless function
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 U-Hub API running on port ${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`🚀 U-Hub API running on port ${PORT}`);
-});
+module.exports = app;
