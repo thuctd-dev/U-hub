@@ -8,11 +8,11 @@ const {
 
 router.route('/').get(getTasks).post(createTask);
 router.route('/:id').put(updateTask).delete(deleteTask);
-router.patch('/:id/status',   updateTaskStatus);
+router.patch('/:id/status', updateTaskStatus);
 router.patch('/:id/priority', updateTaskPriority);
-router.patch('/:id/dates',    updateTaskDates);
-router.post('/:id/subtasks',                  addSubtask);
-router.patch('/:id/subtasks/:subId',          updateSubtask);
-router.delete('/:id/subtasks/:subId',         deleteSubtask);
+router.patch('/:id/dates', updateTaskDates);
+router.post('/:id/subtasks', addSubtask);
+router.patch('/:id/subtasks/:subId', updateSubtask);
+router.delete('/:id/subtasks/:subId', deleteSubtask);
 
 module.exports = router;

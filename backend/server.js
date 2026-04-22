@@ -16,14 +16,14 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/tasks', require('./routes/taskRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api/ai', require('./routes/aiRoutes'));
+app.use('/auth', require('./routes/authRoutes'));
+app.use('/tasks', require('./routes/taskRoutes'));
+app.use('/users', require('./routes/userRoutes'));
+app.use('/projects', require('./routes/projectRoutes'));
+app.use('/ai', require('./routes/aiRoutes'));
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'U-Hub API is running 🚀' });
 });
 

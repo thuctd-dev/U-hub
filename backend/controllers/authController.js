@@ -8,34 +8,6 @@ const generateToken = (id) => {
   });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-exports.register = async (req, res) => {
-  try {
-    const { name, email, password, role } = req.body;
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Email đã được sử dụng' });
-    }
-
-    const user = await User.create({ name, email, password, role });
-
-    const token = generateToken(user._id);
-
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      avatar: user.avatar,
-      token,
-    });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
 
 // @desc    Login user
 // @route   POST /api/auth/login
