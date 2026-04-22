@@ -43,8 +43,14 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Find user by name (case-insensitive)
-    const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i') }).select('+password');
+    // Find user by name or email (case-insensitive)
+    const user = await User.findOne({
+      $or: [
+        { name: new RegExp(`^${username}$`, 'i') },
+        { email: new RegExp(`^${username}$`, 'i') }
+      ]
+    }).select('+password');
+
     if (!user) {
       return res.status(401).json({ message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
     }
