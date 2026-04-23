@@ -254,7 +254,7 @@ const MainLayout: React.FC = () => {
 
         {activeMenu === 'dashboard' && (
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3a3a58', fontSize: 14 }}>
-            Dashboard (coming soon)
+            Dashboard 
           </div>
         )}
       </div>

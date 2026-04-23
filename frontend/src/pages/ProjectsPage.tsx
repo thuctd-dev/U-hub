@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { Modal, Input } from 'antd';
 import { PlusOutlined, CheckCircleOutlined, FolderOpenOutlined, ExclamationCircleFilled, PictureOutlined } from '@ant-design/icons';
@@ -311,23 +312,36 @@ const ProjectsPage: React.FC = () => {
           {([['active', 'Đang thực hiện', activeProjects.length], ['completed', 'Đã hoàn thành', completedProjects.length]] as const).map(([key, label, count]) => (
             <button key={key} onClick={() => setTab(key)}
               style={{
+                position: 'relative',
                 padding: '7px 16px', border: 'none', cursor: 'pointer',
                 borderRadius: 10, fontSize: 13, fontWeight: tab === key ? 700 : 500,
                 display: 'flex', alignItems: 'center', gap: 8,
-                background: tab === key
-                  ? '#447794'
-                  : 'transparent',
+                background: 'transparent',
                 color: tab === key ? '#e8f4ff' : '#7aadca',
-                boxShadow: tab === key
-                  ? '0 2px 8px rgba(18,50,73,0.7), inset 0 1px 0 rgba(255,255,255,0.1)'
-                  : 'none',
-              }} className='hover:bg-cyan-500 hover:text-white transition-all duration-700'>
-              {label}
+                transition: 'color 0.3s ease',
+              }} className='hover:text-white'>
+              {tab === key && (
+                <motion.div
+                  layoutId="active-tab"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: '#447794',
+                    borderRadius: 10,
+                    boxShadow: '0 2px 8px rgba(18,50,73,0.7), inset 0 1px 0 rgba(255,255,255,0.1)',
+                    zIndex: 0,
+                  }}
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <span style={{ position: 'relative', zIndex: 1 }}>{label}</span>
               <span style={{
+                position: 'relative', zIndex: 1,
                 fontSize: 11, padding: '2px 6px', borderRadius: 20, fontWeight: 500,
                 background: tab === key ? 'rgba(255,255,255,0.15)' : 'rgba(68,119,148,0.2)',
                 color: tab === key ? '#fff' : '#5a8fa8',
                 minWidth: 15, textAlign: 'center',
+                transition: 'all 0.3s ease',
               }}>
                 {count}
               </span>
@@ -473,8 +487,8 @@ const ProjectGrid: React.FC<{
 const EmptyState: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => (
   <div className="flex w-full h-[60vh] items-center justify-center">
     <div 
-      className="flex flex-col h-64 w-full max-w-md items-center justify-center rounded-2xl backdrop-blur-md"
-      style={{ color: '#7aadca', background: 'rgba(30, 41, 59, 0.4)', border: '1px solid rgba(255, 255, 255, 0.05)', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)' }}
+      className="flex flex-col h-64 w-full max-w-md shadow-2xl items-center justify-center rounded-2xl backdrop-blur-sm"
+      style={{ color: '#7aadca', border: '1px solid rgba(255, 255, 255, 0.05)' }}
     >
       <div style={{ fontSize: 48, marginBottom: 16, filter: 'drop-shadow(0 4px 12px rgba(122, 173, 202, 0.4))' }}>{icon}</div>
       <div style={{ fontSize: 15, fontWeight: 500, letterSpacing: 0.3 }}>{text}</div>
